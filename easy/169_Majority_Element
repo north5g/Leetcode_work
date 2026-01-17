@@ -1,0 +1,15 @@
+class Solution(object):
+    def majorityElement(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        majority = num = 0
+        for i in nums:
+            if majority == 0:
+                num = i
+            if num == i:
+                majority += 1
+            else: 
+                majority -= 1
+        return num
