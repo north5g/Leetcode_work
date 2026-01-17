@@ -1,0 +1,57 @@
+class Solution:
+    def solveSudoku(self, board: List[List[str]]) -> None:
+        """
+        Do not return anything, modify board in-place instead.
+        """
+        Solved = False
+        rows = defaultdict(set)
+        columns = defaultdict(set)
+        boxes = defaultdict(set)
+        for i in range(9):
+            for j in range(9):
+                if board[i][j] != ".":
+                    rows[i].add(board[i][j])
+                    columns[j].add(board[i][j])
+                    boxes[(i//3)*3+(j//3)].add(board[i][j])
+
+        # rows, columns, and boxes cannot change
+        # go through until can't place, then backpropogate
+        def possible(int, row, column):
+            if (int not in rows[row]) and (int not in columns[column]) and (int not in boxes[(row//3)*3+(column//3)]):
+                return True
+            return False
+        
+        def write(input, row, column):
+            rows[row].add(input)
+            columns[column].add(input)
+            boxes[(row//3)*3+(column//3)].add(input)
+            board[row][column] = input
+
+        def erase(input, row, column):
+            rows[row].remove(input)
+            columns[column].remove(input)
+            boxes[(row//3)*3+(column//3)].remove(input)
+            board[row][column] = "."
+
+        def nextStep(row, column):
+            nonlocal Solved
+            if (row == 8) and (column == 8):
+                Solved = True
+            elif column == 8:
+                backtrack(row + 1, 0)
+            else:
+                backtrack(row, column + 1)
+
+        def backtrack(row, column):
+            nonlocal Solved
+            if board[row][column] == ".":
+                for number in range(1, 10):
+                    input = str(number)
+                    if possible(input, row, column):
+                        write(input, row, column)
+                        nextStep(row, column)
+                        if not Solved:
+                            erase(input, row, column)
+            else:
+                nextStep(row, column)
+        backtrack(0, 0)
