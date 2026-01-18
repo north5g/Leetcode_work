@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int minCapability(vector<int>& nums, int k) {
+        int edge1 = 1;
+        int edge2 = (int) 1e9;
+        int n = nums.size();
+
+        while (edge1 < edge2) {
+            int mid = (edge1 + edge2) / 2;
+            int take = 0;
+            for (int i = 0; i < n; i++) {
+                if (nums[i] <= mid) {
+                    take += 1;
+                    i++;
+                }
+            }
+            if (take >= k) {
+                edge2 = mid;
+            }
+            else {
+                edge1 = mid + 1;
+            }
+        }
+        return edge1;
+    }
+};

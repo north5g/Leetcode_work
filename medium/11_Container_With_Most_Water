@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int maxArea(vector<int>& height) {
+        int edge1 = 0;
+        int edge2 = height.size() - 1;
+        int answer = 0;
+        while (edge1 < edge2) {
+            int tempArea = min(height[edge1], height[edge2]) * (edge2 - edge1);
+            answer = max(answer, tempArea);
+            if (height[edge1] < height[edge2]) {
+                edge1++;
+            }
+            else {
+                edge2--;
+            }
+        }
+        return answer;
+    }
+};

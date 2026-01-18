@@ -1,0 +1,13 @@
+class Solution:
+    def maxRotateFunction(self, nums: List[int]) -> int:
+        latest = 0
+        sum = 0
+        for i, number in enumerate(nums):
+            latest += number * i
+            sum += number
+        max = latest
+        for i in range(len(nums)-1, -1, -1):
+            latest += sum - (nums[i] * len(nums))
+            if latest > max:
+                max = latest
+        return max

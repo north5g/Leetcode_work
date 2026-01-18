@@ -1,0 +1,17 @@
+class Solution:
+    def totalFruit(self, fruits: List[int]) -> int:
+        fruitOne = fruitTwo = -1
+        previous = current = best = 0
+        for f in fruits:
+            if f == fruitOne or f == fruitTwo:
+                current += 1
+            else: current = previous + 1
+
+            if f == fruitTwo:
+                previous += 1
+            else:
+                previous = 1
+                fruitOne, fruitTwo = fruitTwo, f
+            
+            best = max(best, current)
+        return best

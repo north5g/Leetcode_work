@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int minOperations(vector<int>& nums, int x) {
+        int target = 0;
+        int n = nums.size();
+
+        for (int num : nums) target += num;
+        target -= x;
+
+        if (target == 0) {
+            return n;
+        }
+
+        int left = 0;
+        int largest = 0;
+        int current = 0;
+
+        for (int right = 0; right < n; right++) {
+            current += nums[right];
+            while (current > target && left <= right) {
+                current -= nums[left];
+                left++;
+            }
+            if (current == target) {
+                largest = max(largest, right - left + 1);
+            }
+        }
+
+        if (largest > 0) { return n - largest; }
+        else { return -1; }
+    }
+};

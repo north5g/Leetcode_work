@@ -1,0 +1,14 @@
+class Solution:
+    def numSplits(self, s: str) -> int:
+        first = {}
+        last = {}
+
+        for index, char in enumerate(s):
+            if char not in first:
+                first[char] = index
+            last[char] = index
+        index = list(first.values()) + list(last.values())  # max length 26 + 26 = 52
+        index.sort() 
+
+        mid = len(index)//2
+        return index[mid] - index[mid - 1]

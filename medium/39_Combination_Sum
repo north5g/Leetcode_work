@@ -1,0 +1,19 @@
+class Solution:
+    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        candidates.sort()  # optional, helps with pruning
+        answer = []
+
+        def backtrack(start, path, total):
+            if total == target:
+                answer.append(path.copy())
+                return
+            if total > target:
+                return
+            
+            for i in range(start, len(candidates)):
+                path.append(candidates[i])
+                backtrack(i, path, total + candidates[i])  # i, not i+1, allows unlimited reuse
+                path.pop()
+
+        backtrack(0, [], 0)
+        return answer

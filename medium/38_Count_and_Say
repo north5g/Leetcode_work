@@ -1,0 +1,27 @@
+class Solution:
+    @cache
+    def countAndSay(self, n: int) -> str:
+        if n == 1:
+            return "1"
+        if n == 2:
+            return "11"
+        
+        count = 2
+        answer = "11"
+
+        while count != n:
+            left_pointer = 0
+            right_pointer = 0
+            working = ""
+            while right_pointer in range(len(answer)):
+                if (answer[right_pointer] != answer[left_pointer]):
+                    working += str(right_pointer - left_pointer)
+                    working += answer[left_pointer]
+                    left_pointer = right_pointer
+                right_pointer += 1
+            working += str(right_pointer - left_pointer)
+            working += answer[left_pointer]
+            answer = working
+
+            count += 1
+        return answer

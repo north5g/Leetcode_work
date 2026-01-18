@@ -1,0 +1,16 @@
+class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+        rows_hash = defaultdict(set)
+        columns_hash = defaultdict(set)
+        boxes_hash = defaultdict(set)
+
+        for row in range(9):
+            for column in range(9):
+                if board[row][column] != ".":
+                    box = (row//3) * 3 + (column//3)
+                    if (board[row][column] in rows_hash[row]) or (board[row][column] in columns_hash[column]) or (board[row][column] in boxes_hash[box]):
+                        return False
+                    rows_hash[row].add(board[row][column])
+                    columns_hash[column].add(board[row][column])
+                    boxes_hash[box].add(board[row][column])
+        return True
