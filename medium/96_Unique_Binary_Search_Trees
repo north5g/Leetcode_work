@@ -1,0 +1,17 @@
+class Solution:
+    def numTrees(self, n: int) -> int:
+        @cache
+        def counting(start: int, end: int) -> int:
+            total = 0
+            if start > end:
+                return 1
+            for i in range(start, end+1):
+                left = counting(start, i-1)
+                right = counting(i+1, end)
+                total +=  left * right
+            return total
+
+        return counting(1, n) if n else 0
+
+            
+        

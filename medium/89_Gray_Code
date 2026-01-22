@@ -1,0 +1,9 @@
+class Solution:
+    def grayCode(self, n: int) -> List[int]:
+        answer = []
+        temp = 1 << n
+
+        for i in range(temp):
+            answer.append(i ^ (i >> 1))
+        
+        return answer
